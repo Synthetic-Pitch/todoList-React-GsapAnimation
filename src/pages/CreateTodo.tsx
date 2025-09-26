@@ -5,7 +5,7 @@ import DataContext from "../context-api/Data-Context";
 const CreateTodo = () => {
   const {status,setStatus} = useContext(DataContext);
   const [item,setItem] = useState<string[]>([]);
-  const [indexes,setIndexes] = useState<number[]>([]);
+
   const [onCheck, setOnCheck] = useState<number[]>([]);
 
   useEffect(()=>{
@@ -27,7 +27,7 @@ const CreateTodo = () => {
    setOnCheck([]);
     
   }
-  
+
   return (
     <MainLayout>
       <main className="bg-[#D4A483] min-h-[100dvh] w-full flex flex-col items-center">

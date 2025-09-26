@@ -1,0 +1,43 @@
+@import "tailwindcss";
+/* @config "../tailwind.config.js"; */
+
+@theme {
+    --spacing-maxWidth: 1600px;
+    --breakpoint-desktop:1020px;
+    --breakpoint-tablet: 767px;
+    --breakpoint-1300:1300px;
+    --color-ee: #2fa1b5;
+    --color-pokeko:#c48bb8;
+    /* FONTS */
+    --font-mozilla-headline: "Mozilla Headline", sans-serif;
+    --font-noto-sans-kr: "Noto Sans KR", sans-serif;
+    --font-oswald: "Oswald", sans-serif;
+    --font-bagel: "Bagel Fat One",sans-serif;
+    --font-azeret: "Azeret Mono",sans-serif;
+}
+
+@layer utilities{
+    .flex-center{
+        @apply flex items-center justify-center flex-col min-h-screen w-full overflow-x-hidden;
+    }
+}
+
+@layer components{
+    .paper{
+        background-image: url('../src/assets/images/paperBG.png');
+        object-fit: contain;
+    }
+    .scrollXHidden{
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    .shadowEffect1{
+        box-shadow: 2px 12px 10px 2px rgba(0, 0, 0, 0.5);
+    }
+    .shadowEffect2{
+        box-shadow: .5px 3px 2px 0px rgba(127, 127, 127, 0.5);
+    }
+    .letterShadow{
+        
+    }
+}

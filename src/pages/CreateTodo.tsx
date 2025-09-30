@@ -15,11 +15,11 @@ const CreateTodo = () => {
   const [onCheck, setOnCheck] = useState<number[]>([]);
   const [selected, setSelected] = useState<Date | undefined>(undefined);
 
-  const [todoList,setTodoList] = useState<any>({
-    today:[],
-    tomorrow:[],
-    upcoming:[]
-  });
+  // const [todoList,setTodoList] = useState<any>({
+  //   today:[],
+  //   tomorrow:[],
+  //   upcoming:[]
+  // });
   
   useEffect(()=>{
     const localTodo = JSON.parse(localStorage.getItem("todos") || '[]');

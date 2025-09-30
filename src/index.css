@@ -14,6 +14,7 @@
     --font-oswald: "Oswald", sans-serif;
     --font-bagel: "Bagel Fat One",sans-serif;
     --font-azeret: "Azeret Mono",sans-serif;
+    --font-poppins: "Poppins",sans-serif;
 }
 
 @layer utilities{

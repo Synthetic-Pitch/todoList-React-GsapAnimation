@@ -1,6 +1,9 @@
 import { useContext,useEffect,useRef, useState } from "react";
 import MainLayout from "../layout/MainLayout";
 import DataContext from "../context-api/Data-Context";
+import { DayPicker } from 'react-day-picker';
+
+
 
 const CreateTodo = () => {
   const {status,setStatus} = useContext(DataContext);
@@ -8,12 +11,19 @@ const CreateTodo = () => {
   const [todo,setTodo] = useState<string>('');
   const ref = useRef<HTMLInputElement | null>(null);
   const modal = useRef<HTMLDialogElement | null>(null)
+  const datePicker = useRef<HTMLDialogElement | null>(null)
   const [onCheck, setOnCheck] = useState<number[]>([]);
-  const [todoList,setTodoList] = useState<any[]>([]);
+  const [selected, setSelected] = useState<Date | undefined>(undefined);
+
+  const [todoList,setTodoList] = useState<any>({
+    today:[],
+    tomorrow:[],
+    upcoming:[]
+  });
   
   useEffect(()=>{
-    const todo = JSON.parse(localStorage.getItem("todos") || '[]');
-    setTodoList(todo);
+    const localTodo = JSON.parse(localStorage.getItem("todos") || '[]');
+    localTodo.forEach((todo:any)=>console.log(todo.text));
   },[localStorage.getItem("todos")]);
 
   const AddItem = () => {
@@ -33,18 +43,19 @@ const CreateTodo = () => {
   }
   
   const SaveItem = async () => {
+    if(todo === '' || selected === undefined) {
+      
+      return
+    }
     modal.current?.showModal()
     await new Promise<void>((resolve) => {
       setTimeout(() => {
-        modal.current?.close()
+        modal.current?.close();
         resolve();
       }, 1500)
     })
-    if(todo === '') {
-      setStatus('view');
-      return
-    }
-    const newTodo = { id: Date.now(), text:todo, done: false,item:item }
+   
+    const newTodo = { id: Date.now(), text:todo, done: false,item:item, DateToAcomplish:selected || null };
     const todos = JSON.parse(localStorage.getItem("todos") || "[]")
     todos.push(newTodo)
     localStorage.setItem("todos", JSON.stringify(todos))
@@ -56,22 +67,27 @@ const CreateTodo = () => {
       <main className="bg-[#D4A483] min-h-[100dvh] w-full flex flex-col items-center">
         <nav className="h-[100px] w-full max-w-[1200px] flex">
           <section className="h-full w-[70%] tablet:w-[30%] flex justify-evenly items-center font-bold tracking-[3px] text-4xl font-azeret">
-            <button
-              className="text-[#197862] cursor-pointer h-min"
-              onClick={()=>setStatus('add')}
-            >{status === 'add' ? (<>Back</>) : 'ADD'}</button>
+            {
+              status === 'view' && (
+                <button onClick={()=>setStatus('add')} className="text-[#197862]">Add</button>
+              )
+            }
+            {
+              status === 'add' && (
+                <button className="text-[#197862] cursor-pointer h-min " onClick={()=>setStatus('view')}>Back</button>
+              )
+            }
             {
               status === 'add' ? (
-              <button 
-                className="text-[#FDEA61] cursor-pointer h-min" 
-                onClick={SaveItem}
-                >SAVE</button>
-            ):(
-              <button
-                className=""
-
-              >EDit</button>
-            )
+                <button
+                  className="text-[#f9ee95] cursor-pointer h-min"
+                  onClick={SaveItem}
+                >Save</button>
+              ):(
+                <button
+                  className="text-[#dedede]"
+                >Edit</button>
+              )
             }
           </section>
           <section className="h-full w-[30%] tablet:w-[70%] flex justify-end items-center px-6 text-white select-none text-2xl font-azeret">
@@ -86,14 +102,7 @@ const CreateTodo = () => {
           {
             (status === 'view' || status === 'edit') ? (
               <main>
-                {
-                  todoList.map((todo)=>(
-                    <div key={todo.id}>
-                      <h2 className="font-poppins px-4">{todo.text}</h2>
-                      <h2 className="bg-[teal]">{}</h2>
-                    </div>
-                  ))
-                }
+                 
               </main>
             ) : (
                 <div className="flex flex-col">
@@ -114,7 +123,7 @@ const CreateTodo = () => {
                       </button>
                     )
                   }
-                  <button className="ml-4 cursor-pointer bg-[#FDEA61] px-4 rounded-xl">select Date</button>
+                  <button className="ml-4 cursor-pointer bg-[#f9ee95] px-4 rounded-xl" onClick={()=>datePicker.current?.showModal()}>{selected ? selected.toLocaleDateString():"select date"}</button>
                   <main className="mt-4 flex flex-col gap-2">
                     {
                       item.map((value,index) => (
@@ -151,6 +160,17 @@ const CreateTodo = () => {
         <dialog ref={modal} className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-[#8dd38d] px-[100px] py-[100px] rounded-2xl outline-0">
           <p className="text-[#dddddd] text-4xl">succes</p>
         </dialog>
+        <dialog ref={datePicker} className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-[#dcd0a6] px-[20px] py-[40px] rounded-2xl outline-0">
+          <DayPicker
+            mode="single"
+            selected={selected}
+            onSelect={(date)=>{
+              setSelected(date);
+              datePicker.current?.close();
+            }}
+          />
+        </dialog>
+
       </main>
     </MainLayout>
   )

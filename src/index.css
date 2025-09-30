@@ -38,5 +38,42 @@
     .shadowEffect2{
         box-shadow: .5px 3px 2px 0px rgba(127, 127, 127, 0.5);
     }
-   
+    
+    /* Day Picker */
+    .rdp-root{
+        width: 280px;
+    }
+    .rdp-nav{
+        background-color: #d1c79f;
+        display: flex !important;
+        justify-content: center !important;
+        gap: 20px !important;
+    }
+    .rdp-button_next{
+        cursor: pointer;
+    }
+    .rdp-month_caption{
+        font-size: 20px;
+        display: flex;
+        justify-content: center !important;
+    }
+    .rdp-month table {
+        width: 100%;
+    }
+    .rdp-day{
+        cursor: pointer;
+        text-align: center;
+    }
+    .rdp-selected{
+       background-color: #bcc671;
+    }
+    .rdp-today{
+        background-color:#ece1b5
+    }
+
+    @media screen and (min-width: 767px) {
+        .rdp-root{
+            width: 400px;
+        }
+    }
 }

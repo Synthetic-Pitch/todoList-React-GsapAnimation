@@ -24,7 +24,7 @@ const CreateTodo = () => {
                         )
                     }
                 </section>
-                <aside className="hidden w-[70%] tablet:flex justify-evenly pl-[20%] text-xl font-azeret">
+                <aside className="hidden w-[70%] tablet:flex justify-evenly pl-[20%] text-xl font-azeret select-none">
                     <button className="text-[#FFFFFF] cursor-pointer px-2">history</button>
                     <button className="text-[#FFFFFF] cursor-pointer px-2">failed</button>
                     <button className="text-[#FFFFFF] cursor-pointer px-2">succed</button>

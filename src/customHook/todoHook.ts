@@ -3,10 +3,19 @@ import { useEffect, useState } from "react";
 
 export function UseTodo(){
     const [status,setStatus] = useState('view');
-    
-    useEffect(()=>{
-        console.log(status);
-    },[status])
+    const [item,setItem] = useState<string[] >([]);
 
-    return {status,setStatus}
+    useEffect(()=>{
+        console.log(item);
+    },[item])
+
+    const AddItem = () => {
+        if (item.includes(''))return;
+        setItem(prev=>[...prev,''])
+    }
+    const DeleteItem = () => {
+        
+    }
+
+    return {status,setStatus,item,setItem,AddItem,DeleteItem}
 }

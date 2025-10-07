@@ -5,6 +5,20 @@ import { DayPicker } from 'react-day-picker';
 
 
 
+interface Td {
+  id:number,
+  done:boolean,
+  DateToAcomplish:string,
+  item:string[],
+  text:string
+}
+
+type TodoList = {
+  today: Td[];
+  tomorrow: Td[];
+  upcoming: Td[];
+};
+
 const CreateTodo = () => {
   const {status,setStatus} = useContext(DataContext);
   const [item,setItem] = useState<string[]>([]);
@@ -15,16 +29,35 @@ const CreateTodo = () => {
   const [onCheck, setOnCheck] = useState<number[]>([]);
   const [selected, setSelected] = useState<Date | undefined>(undefined);
   
-  // const [todoList,setTodoList] = useState<any>({
-  //   today:[],
-  //   tomorrow:[],
-  //   upcoming:[]
-  // });
+  const [todoList,setTodoList] = useState<TodoList>({
+    today:[],
+    tomorrow:[],
+    upcoming:[]
+  });
   
   useEffect(()=>{
     const localTodo = JSON.parse(localStorage.getItem("todos") || '[]');
-    localTodo.forEach((todo:any)=>console.log(todo.text));
+    SortTodo(localTodo)
   },[localStorage.getItem("todos")]);
+  useEffect(()=>{
+    console.log(status);
+    
+  },[status])
+
+
+  const SortTodo = (todo:any[]) => {
+    const today = new Date().toLocaleDateString();
+    const tomorrow = new Date(Date.now() + 86400000).toLocaleDateString(); // add 1 day in ms
+   
+    
+    setTodoList((prev: TodoList) => ({
+      ...prev, // keep today, tomorrow, upcoming
+      today: todo.filter((td: Td) => td.DateToAcomplish === today),
+      tomorrow: todo.filter((td:Td) => td.DateToAcomplish === tomorrow),
+      upcoming: todo.filter((td:Td) => td.DateToAcomplish !== today && td.DateToAcomplish !== tomorrow)
+    }));
+
+  }
 
   const AddItem = () => {
     if(item.includes(''))return
@@ -54,8 +87,8 @@ const CreateTodo = () => {
         resolve();
       }, 1500)
     })
-   
-    const newTodo = { id: Date.now(), text:todo, done: false,item:item, DateToAcomplish:selected || null };
+    
+    const newTodo = { id: Date.now(), text:todo, done: false,item:item, DateToAcomplish:selected.toLocaleDateString() || null };
     const todos = JSON.parse(localStorage.getItem("todos") || "[]")
     todos.push(newTodo)
     localStorage.setItem("todos", JSON.stringify(todos))
@@ -98,62 +131,70 @@ const CreateTodo = () => {
             </div>
           </section>
         </nav>
+        
         <aside className="w-full max-w-[1200px] flex flex-col">
+          {/* //displaying todo */}
           {
-            (status === 'view' || status === 'edit') ? (
-              <main>
-                 
-              </main>
-            ) : (
-                <div className="flex flex-col">
-                  <textarea
-                    value={todo}
-                    onChange={(e)=>setTodo(e.target.value)}
-                    placeholder="add todo"
-                    className="text-2xl rounded-[2rem] font-mono outline-0 px-4 py-4 bg-[#e9b390] w-full desktop:w-[80%] mb-[1rem] mx-auto"
-                    rows={4}
-                  />
-                <aside className="ml-4 relative">
-                  <button className="cursor-pointer bg-[#00800060] px-4 rounded-full text-white select-none" onClick={AddItem}>+addItem</button>
+            status === 'view' && (
+              <>
+                {todoList.today.length > 0 && <h1>Today</h1>}
+                {todoList.today.map((td)=><div key={td.id}>{td.text}</div>)}
+                {todoList.tomorrow.length > 0 && <h1>Tomorrow</h1>}
+                {todoList.tomorrow.map((td)=><div key={td.id}>{td.text}</div>)}
+              </>
+            )
+          }
+          {/* //adding todo */}
+          {
+            status === 'add' && (
+              <>
+                <textarea 
+                  name="text" 
+                  placeholder="enter todo"  
+                  className="px-4 py-4 min-h-20 w-full tablet:w-[90%] outline-1 rounded-xl m-auto" 
+                  cols={50}
+                  rows={4}
+                />
+                <div className="flex gap-6 mt-6">
+                  <button 
+                    className="cursor-pointer bg-[#89db89] px-4 rounded-xl" 
+                    onClick={AddItem}>+addItem</button>
+                  <button 
+                    className="cursor-pointer bg-[#dd7777] px-4 rounded-xl " 
+                    onClick={DeleteItem}>delete</button>
+                  <button className="cursor-pointer bg-[#ddbe77] px-4 rounded-xl ">Date</button>
+                </div>
+                <div className="flex flex-col gap-2 py-2 mt-2">
                   {
-                    (item.length > 0 && onCheck.length > 0) && (
-                      <button
-                        className="ml-4 cursor-pointer bg-[#ff000093] px-2 rounded-full text-white select-none" onClick={DeleteItem}>
-                          delete
-                      </button>
-                    )
-                  }
-                  <button className="ml-4 cursor-pointer bg-[#f9ee95] px-4 rounded-xl" onClick={()=>datePicker.current?.showModal()}>{selected ? selected.toLocaleDateString():"select date"}</button>
-                  <main className="mt-4 flex flex-col gap-2">
-                    {
-                      item.map((value,index) => (
-                        <div key={index} className="h-[30px] flex items-center gap-2">
-                          <input
-                            type="checkbox"
-                            className="h-[20px] w-[20px] outline-0 border-0"
-                            checked={onCheck.includes(index)}
-                            onChange={(e) => {
-                                if (e.target.checked) {
-                                  setOnCheck((prev) => [...prev, index]);
-                                } else {
-                                  setOnCheck((prev) => prev.filter((i) => i !== index));
-                                }
-                              }
+                    item.map((singleItem, index) => (
+                      <div key={index} className="flex gap-2">
+                        <input 
+                          onChange={(e)=>{
+                            const val = e.target.checked
+                            if(val){
+                              setOnCheck(prev=>[...prev,index])
                             }
-                          />
-                          <input 
-                            type="text" 
-                            placeholder="enter item" 
-                            value={value} 
-                            onChange={(e) => UpdateItem(index, e.target.value)} 
-                            className="outline-0 h-full w-full tablet:w-[500px] desktop:w-[600px] bg-[#eee6e74b] m-0 px-4 font-mono placeholder:text-gray-500 placeholder:font-mono"
-                          /> 
-                        </div> 
-                      )) 
-                    } 
-                  </main> 
-                </aside> 
-              </div> 
+                          }}
+                          type="checkbox" 
+                          className=" h-6 w-6"
+                        />
+                        <input 
+                          type="text" 
+                          placeholder="enter item" 
+                          value={singleItem}  // ✅ Just use singleItem, not item[index]
+                          onChange={(e) => {
+                            // Update the specific index when user types
+                            const newArray = [...item];
+                            newArray[index] = e.target.value;
+                            setItem(newArray);
+                          }}
+                          className="px-6 outline-0 bg-[#ede0e0]"
+                        />
+                      </div>
+                    ))
+                  }
+                </div>
+              </>
             )
           }
         </aside>

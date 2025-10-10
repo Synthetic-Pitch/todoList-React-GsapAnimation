@@ -18,11 +18,10 @@ export function UseTodo(){
     
     // This add item together with random UUID and check if it has empty value
     const AddItem = () => {
-        const findIndex = item.findIndex((i,_)=> i.text === '');
-        setEmptyInput(findIndex === -1 ? null:findIndex);
-        
-        const condition = item.some((item,_)=> item.text === '');
+        const condition = item.some((item,_)=> item.text.trim() === '');
         if(condition) {
+            const findIndex = item.findIndex((i,_)=> i.text.trim() === ''); //this find what index is empty
+            setEmptyInput(findIndex === -1 ? null:findIndex);
             setToggleToolTp(true);
             setTimeout(()=>{
                 setToggleToolTp(false);

@@ -11,7 +11,7 @@ const TodoForm = () => {
             
             <section className="w-full px-4 py-6">
                 <aside className="flex gap-4 select-none">
-                    <button 
+                    <button
                         className="cursor-pointer px-2 bg-[red] rounded-xl" onClick={AddItem}>+addItem</button>
                     <button
                         className="cursor-pointer px-2 bg-[red] rounded-xl"

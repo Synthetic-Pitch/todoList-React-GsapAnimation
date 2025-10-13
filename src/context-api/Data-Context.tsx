@@ -1,16 +1,19 @@
-import { createContext } from "react";
-import type { DataItems } from "../models/Context-api";
+import React, { createContext } from "react";
+import type { DataItem } from "../models/Context-api";
+
 
 interface DataContextType {
-    UI_Data: DataItems[];
+    item: DataItem[],
+    setItem:React.Dispatch<React.SetStateAction<DataItem[]>>,
     status: string;
     setStatus: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const DataContext = createContext<DataContextType>({
-    UI_Data: [],
     status: 'view',
     setStatus: () => {},
+    item: [],
+    setItem :() => {}
 });
 
 export default DataContext;

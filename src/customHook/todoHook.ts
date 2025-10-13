@@ -1,20 +1,14 @@
-import { useEffect, useState } from "react";
+import {  useContext, useState } from "react";
+import DataContext from "../context-api/Data-Context";
 
-export type ItemType = {
-    id:string;
-    text:string;
-}
+
 
 export function UseTodo(){
     const [status,setStatus] = useState('view');
-    const [item,setItem] = useState<ItemType[]>([]);
     const [deleteList,setDeleteList] = useState<number[]>([]);
     const [toggleToolTp,setToggleToolTp] = useState(false);
     const [emptyInput,setEmptyInput] = useState<number | null>(null);
-
-    useEffect(()=>{
-       console.log(item);
-    },[item]);
+    const {item,setItem} = useContext(DataContext)
     
     // This add item together with random UUID and check if it has empty value
     const AddItem = () => {
@@ -45,6 +39,7 @@ export function UseTodo(){
         setDeleteList([]);
     }
 
+   
     return {
         status,setStatus,item,setItem,AddItem,DeleteItem,deleteList,setDeleteList,
         toggleToolTp,emptyInput

@@ -7,13 +7,21 @@ interface DataContextType {
     setItem:React.Dispatch<React.SetStateAction<DataItem[]>>,
     status: string;
     setStatus: React.Dispatch<React.SetStateAction<string>>;
+    todoText:string,
+    setTodoText:React.Dispatch<React.SetStateAction<string>>;
+    isTextAreaValue:boolean;
+    setTextAreaValue:React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const DataContext = createContext<DataContextType>({
     status: 'view',
     setStatus: () => {},
     item: [],
-    setItem :() => {}
+    setItem :() => {},
+    todoText:'',
+    setTodoText:()=>{},
+    isTextAreaValue:false,
+    setTextAreaValue:()=>{}
 });
 
 export default DataContext;

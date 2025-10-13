@@ -38,6 +38,9 @@
     .shadowEffect2{
         box-shadow: .5px 3px 2px 0px rgba(127, 127, 127, 0.5);
     }
+    .textShadow{
+        text-shadow: 1px 1px 5px rgb(54, 54, 54) ;
+    }
     
     /* Day Picker */
     .rdp-root{

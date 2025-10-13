@@ -4,11 +4,10 @@ import DataContext from "../context-api/Data-Context";
 
 
 export function UseTodo(){
-    const [status,setStatus] = useState('view');
     const [deleteList,setDeleteList] = useState<number[]>([]);
     const [toggleToolTp,setToggleToolTp] = useState(false);
     const [emptyInput,setEmptyInput] = useState<number | null>(null);
-    const {item,setItem} = useContext(DataContext)
+    const {item,setItem,todoText,setTodoText,isTextAreaValue} = useContext(DataContext);
     
     // This add item together with random UUID and check if it has empty value
     const AddItem = () => {
@@ -41,7 +40,7 @@ export function UseTodo(){
 
    
     return {
-        status,setStatus,item,setItem,AddItem,DeleteItem,deleteList,setDeleteList,
-        toggleToolTp,emptyInput
+       item,setItem,AddItem,DeleteItem,deleteList,setDeleteList,
+        toggleToolTp,emptyInput,todoText,setTodoText,isTextAreaValue
     }
 }

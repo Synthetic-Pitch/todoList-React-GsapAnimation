@@ -1,13 +1,27 @@
+
 import { UseTodo } from "../customHook/todoHook";
 import type { DataItem } from "../models/Context-api";
 import { Tooltip as ReactTooltip} from 'react-tooltip';
 
 const TodoForm = () => {
-    const {AddItem,item,setItem,DeleteItem,setDeleteList,toggleToolTp,emptyInput} = UseTodo();
+    const {
+        AddItem,item,setItem,DeleteItem,setDeleteList,toggleToolTp,
+        emptyInput,setTodoText,todoText,isTextAreaValue
+    } = UseTodo();
+
     
     return (
         <div className="w-full max-w-[1200px] flex flex-col items-center">
-            <textarea rows={4} className="w-full tablet:w-[80%] py-4 px-2 outline-1 rounded-xl outline-gray-700 text-xl"></textarea>
+            <textarea
+                value={todoText}
+                onChange={(e)=>{
+                    setTodoText(e.target.value);
+                }}
+                placeholder={ isTextAreaValue ? 'please write text...':'write...'}
+                rows={4} 
+                className={`w-full tablet:w-[80%] py-4 px-2 outline-1 rounded-xl outline-gray-700 text-xl ${isTextAreaValue && 'placeholder:text-[#d84545]'}`}
+            />
+            
             <section className="w-full px-4 py-6 text-xl text-[#ffffff]">
                 <aside className="flex gap-4 select-none">
                     <button
@@ -28,6 +42,7 @@ const TodoForm = () => {
                         <input
                             type="checkbox"
                             className="h-6 w-6"
+                            
                             onChange={(e)=>{
                                 if(e.target.checked){
                                     setDeleteList(prev=>[...prev,index]);

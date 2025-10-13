@@ -4,22 +4,32 @@ import SaveBtn from "../components/SaveBtn";
 import TodoForm from "../components/TodoForm";
 import TodoMap from "../components/TodoMap";
 import DataContext from "../context-api/Data-Context";
+import { UseTodo } from "../customHook/todoHook";
 
 const CreateTodo = () => {
     const {status,setStatus,} = useContext(DataContext);
-    
+
     return (
         <div className="bg-[#D4A483] min-h-[100dvh] flex flex-col items-center">
             <nav className="w-full max-w-[1200px] flex py-4">
                 <section className="w-full tablet:w-[30%] h-full flex justify-evenly text-4xl">
                     { (status === 'view' || status === 'edit') && (
-                        <button onClick={()=>setStatus('add')}>ADD</button>
+                        <button 
+                            className="textShadow text-[#197862] cursor-pointer"
+                            onClick={()=>setStatus('add')}
+                        >ADD</button>
                     )}
                     { status === 'view' && (
-                        <button onClick={()=>setStatus('edit')}>EDIT</button>
+                        <button 
+                            className="textShadow text-[#FDEA61] cursor-pointer"
+                            onClick={()=>setStatus('edit')}
+                        >EDIT</button>
                     )}
                     { status === 'add' && (
-                        <button onClick={()=>setStatus('view')}>BACK</button>
+                        <button 
+                            className="textShadow text-[#197862] cursor-pointer"
+                            onClick={()=>setStatus('view')}
+                        >BACK</button>
                     )}
                     { (status === 'add' || status === 'edit') && (
                         <SaveBtn />

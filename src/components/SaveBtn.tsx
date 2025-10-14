@@ -4,7 +4,7 @@ import DataContext from "../context-api/Data-Context";
 
 
 const SaveBtn = () => {  
-    const {item,setItem,status, setStatus, todoText,setTodoText,isTextAreaValue,setTextAreaValue,todo} = useContext(DataContext);
+    const {item,setItem,status, setStatus, todoText,setTodoText,setTextAreaValue,todo} = useContext(DataContext);
     
 
     const SaveTodo = () => {

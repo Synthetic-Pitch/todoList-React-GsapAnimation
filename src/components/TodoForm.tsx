@@ -8,7 +8,7 @@ const TodoForm = () => {
         AddItem,item,setItem,DeleteItem,setDeleteList,toggleToolTp,
         emptyInput,setTodoText,todoText,isTextAreaValue
     } = UseTodo();
-    
+
     return (
         <div className="w-full max-w-[1200px] flex flex-col items-center">
             <textarea
@@ -66,7 +66,6 @@ const TodoForm = () => {
                     </div>
                 ))
             }</main>
-           
             <ReactTooltip id="my-tooltip" isOpen={toggleToolTp}/>
         </div>
     );

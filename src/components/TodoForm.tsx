@@ -8,7 +8,6 @@ const TodoForm = () => {
         AddItem,item,setItem,DeleteItem,setDeleteList,toggleToolTp,
         emptyInput,setTodoText,todoText,isTextAreaValue
     } = UseTodo();
-
     
     return (
         <div className="w-full max-w-[1200px] flex flex-col items-center">
@@ -42,7 +41,6 @@ const TodoForm = () => {
                         <input
                             type="checkbox"
                             className="h-6 w-6"
-                            
                             onChange={(e)=>{
                                 if(e.target.checked){
                                     setDeleteList(prev=>[...prev,index]);

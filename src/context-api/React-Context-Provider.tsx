@@ -1,7 +1,7 @@
 import DataContext from "./Data-Context";
 import { UI_Data } from "./Data";
 import { useState } from "react";
-import type { DataItem } from "../models/Context-api";
+import type { DataItem, TodoType } from "../models/Context-api";
 
 
 export default function ReactProvider ({children}:{children:React.ReactNode}){
@@ -9,7 +9,8 @@ export default function ReactProvider ({children}:{children:React.ReactNode}){
     const [item,setItem] = useState<DataItem[]>([]);
     const [todoText,setTodoText] = useState<string>('');
     const [isTextAreaValue,setTextAreaValue] = useState<boolean>(false);
-    
+    const [todo, setTodo] = useState<TodoType[]>([]);
+
     const contextValue = {
         UI_Data,
         status,
@@ -19,7 +20,8 @@ export default function ReactProvider ({children}:{children:React.ReactNode}){
         todoText,
         setTodoText,
         isTextAreaValue,
-        setTextAreaValue
+        setTextAreaValue,
+        todo, setTodo
     }
     return <DataContext.Provider value={contextValue}>{children}</DataContext.Provider>
 };

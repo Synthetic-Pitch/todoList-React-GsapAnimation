@@ -1,7 +1,11 @@
-import { useEffect, useState } from "react";
+import deleteIcon from '../assets/images/delete.png';
+import { useContext, useEffect } from "react";
 import type { TodoType } from "../models/Context-api"; 
+import DataContext from "../context-api/Data-Context";
+
+
 const TodoMap =  () => {
-    const [todo,setTodo] = useState([])
+    const {status,todo, setTodo} = useContext(DataContext);
     const storage = localStorage.getItem('todo');
     
     useEffect(()=>{
@@ -9,21 +13,50 @@ const TodoMap =  () => {
             setTodo(JSON.parse(storage));
         }
     },[storage]);
+    
+    const deleteTodo = (id:string)=> {
+        console.log(id);
+        setTodo(prev=>{
+            const updated = prev.filter((td:TodoType,_)=> td.id !== id);
+            localStorage.setItem('todo',JSON.stringify(updated));
+            return updated;
+        });
+    }
 
     return (
         <div className=" w-full max-w-[1200px]">{
-            todo.map((td:TodoType)=>(
-                <div key={td.id}>
-                    <div className="flex">
-                         <input type="checkBox" />
-                         <h1 className="text-xl font-bold">{td.todo}</h1>
-                    </div>
-                    
-                    {
-                        td.item.map((item)=>(
-                            <div key={item.id} className="text-[#fdfdfd] pl-4">{item.text}</div>
-                        ))
-                    }
+            (Array.isArray(todo) && todo.length > 0 && todo !== undefined) &&
+            todo.map((td:TodoType,index:number) => (
+                <div key={td.id || index} className=''>
+                   <section className='flex items-center'>
+                        <input
+                            type="text"
+                            value={ td.todo }
+                            onChange={(e)=>{
+                                setTodo(prev=>{
+                                    const arr = [...prev];
+                                    arr[index].todo = e.target.value;
+                                    return arr;
+                                })
+                            }}
+                            style={{width:`${td.todo.length + 2}ch`,outline:'none'}}
+                            className='text-2xl'
+                        />
+                        { status === 'edit' && (
+                            <img 
+                                src={deleteIcon} alt="" 
+                                className='h-5 cursor-pointer'
+                                onClick={()=>deleteTodo(td.id)}
+                            />
+                        ) }
+                   </section>
+                   <aside>
+                        {
+                            td.item.map((tdi,_)=>(
+                                <div key={tdi.id}>{tdi.text}</div>
+                            ))
+                        }
+                   </aside>
                 </div>
             ))
         }</div>

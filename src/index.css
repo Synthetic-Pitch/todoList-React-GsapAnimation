@@ -41,6 +41,12 @@
     .textShadow{
         text-shadow: 1px 1px 5px rgb(54, 54, 54) ;
     }
+    .inputNotSelectable{
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
     
     /* Day Picker */
     .rdp-root{

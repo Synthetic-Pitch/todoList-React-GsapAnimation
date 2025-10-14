@@ -4,12 +4,21 @@ import DataContext from "../context-api/Data-Context";
 
 
 const SaveBtn = () => {  
-    const {item,setItem, setStatus, todoText,setTodoText,isTextAreaValue,setTextAreaValue} = useContext(DataContext);
+    const {item,setItem,status, setStatus, todoText,setTodoText,isTextAreaValue,setTextAreaValue,todo} = useContext(DataContext);
     
+
     const SaveTodo = () => {
+        if(status === 'add'){
+            handleEdit();
+        }
+        else if(status === 'edit'){
+            localStorage.setItem('todo',JSON.stringify(todo))
+            setStatus('view');
+        }
+    }
+
+    const handleEdit = ()=> {
         if(todoText.trim() === ''){
-            console.log(isTextAreaValue);
-            
             return setTextAreaValue(true);
         }else setTextAreaValue(false);
 

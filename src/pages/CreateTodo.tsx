@@ -8,7 +8,7 @@ import DataContext from "../context-api/Data-Context";
 
 const CreateTodo = () => {
     const {status,setStatus,} = useContext(DataContext);
-
+    
     return (
         <div className="bg-[#D4A483] min-h-[100dvh] flex flex-col items-center">
             <nav className="w-full max-w-[1200px] flex py-4">

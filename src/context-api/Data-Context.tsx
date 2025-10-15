@@ -1,7 +1,6 @@
 import React, { createContext } from "react";
 import type { DataItem, TodoType } from "../models/Context-api";
 
-
 interface DataContextType {
     item: DataItem[],
     setItem:React.Dispatch<React.SetStateAction<DataItem[]>>,

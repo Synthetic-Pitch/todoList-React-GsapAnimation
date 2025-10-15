@@ -1,8 +1,7 @@
 import deleteIcon from '../assets/images/delete.png';
 import { useContext, useEffect } from "react";
-import type { TodoType } from "../models/Context-api"; 
+import type { TodoType } from "../models/Context-api";
 import DataContext from "../context-api/Data-Context";
-
 
 const TodoMap =  () => {
     const {status,todo, setTodo} = useContext(DataContext);
@@ -12,10 +11,10 @@ const TodoMap =  () => {
         if(storage){
             setTodo(JSON.parse(storage));
         }
-    },[storage]);
+        console.log(status);
+    },[storage,status]);
     
-    const deleteTodo = (id:string)=> {
-        console.log(id);
+    const deleteTodo = ( id:string )=> {
         setTodo(prev=>{
             const updated = prev.filter((td:TodoType,_)=> td.id !== id);
             localStorage.setItem('todo',JSON.stringify(updated));
@@ -40,7 +39,8 @@ const TodoMap =  () => {
                                 })
                             }}
                             style={{width:`${td.todo.length + 2}ch`,outline:'none'}}
-                            className='text-2xl'
+                            className='text-4xl font-poppins'
+                            disabled={status === 'edit' ? false: true}
                         />
                         { status === 'edit' && (
                             <img 
@@ -53,7 +53,7 @@ const TodoMap =  () => {
                    <aside>
                         {
                             td.item.map((tdi,_)=>(
-                                <div key={tdi.id}>{tdi.text}</div>
+                                <div key={tdi.id} className='pl-6'>{tdi.text}</div>
                             ))
                         }
                    </aside>

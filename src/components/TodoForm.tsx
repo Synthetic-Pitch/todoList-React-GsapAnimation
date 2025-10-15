@@ -8,7 +8,7 @@ const TodoForm = () => {
         AddItem,item,setItem,DeleteItem,setDeleteList,toggleToolTp,
         emptyInput,setTodoText,todoText,isTextAreaValue
     } = UseTodo();
-
+    
     return (
         <div className="w-full max-w-[1200px] flex flex-col items-center">
             <textarea
@@ -50,7 +50,7 @@ const TodoForm = () => {
                             }}
                          />
                         <input 
-                            type="text" 
+                            type="text"
                             data-tooltip-id={`${emptyInput === index ? 'my-tooltip':''}`}
                             data-tooltip-content="please add item"
                             className="bg-[white] outline-0 px-2 h-6"

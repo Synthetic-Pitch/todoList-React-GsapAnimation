@@ -34,7 +34,7 @@ export function UseTodo(){
         const indexSet = new Set(deleteList);
         setItem(prev=>
             prev.filter((_,index)=> !indexSet.has(index))
-        )
+        );
         setDeleteList([]);
     }
 

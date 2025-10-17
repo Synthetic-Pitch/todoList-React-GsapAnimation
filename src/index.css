@@ -50,21 +50,29 @@
     
     /* Day Picker */
     .rdp-root{
-        width: 280px;
+        display: flex;
+        flex-direction: column;
+        width: 90vw;
     }
     .rdp-nav{
-        background-color: #d1c79f;
+        background-color: #e0d7b6;
         display: flex !important;
         justify-content: center !important;
-        gap: 20px !important;
+        gap: 50px !important;
+    }
+    .rdp-chevron{
+        scale: 1.5;
+        height: 50px;
     }
     .rdp-button_next{
         cursor: pointer;
     }
     .rdp-month_caption{
-        font-size: 20px;
+        font-size: 30px;
         display: flex;
         justify-content: center !important;
+        padding-top: 10px;
+        padding-bottom: 10px;
     }
     .rdp-month table {
         width: 100%;
@@ -72,12 +80,22 @@
     .rdp-day{
         cursor: pointer;
         text-align: center;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+  
+    .rdp-day_button{
+        font-size: 20px;
+        width: 100%;
     }
     .rdp-selected{
        background-color: #bcc671;
     }
     .rdp-today{
-        background-color:#ece1b5
+        background-color:#ece1b5;
+        display: flex;
+        justify-content: center;
+   
     }
 
     @media screen and (min-width: 767px) {

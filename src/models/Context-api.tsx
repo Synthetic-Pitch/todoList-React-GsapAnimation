@@ -10,3 +10,7 @@ export interface TodoType {
     done:Boolean,
     dateToAcomplish:string
 }
+export interface DateType {
+    isOpen:boolean,
+    date:Date | null
+}

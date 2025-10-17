@@ -1,4 +1,5 @@
 
+import { DayPicker } from "react-day-picker";
 import { UseTodo } from "../customHook/todoHook";
 import type { DataItem } from "../models/Context-api";
 import { Tooltip as ReactTooltip} from 'react-tooltip';
@@ -6,11 +7,11 @@ import { Tooltip as ReactTooltip} from 'react-tooltip';
 const TodoForm = () => {
     const {
         AddItem,item,setItem,DeleteItem,setDeleteList,toggleToolTp,
-        emptyInput,setTodoText,todoText,isTextAreaValue
+        emptyInput,setTodoText,todoText,isTextAreaValue,date,setDate
     } = UseTodo();
     
     return (
-        <div className="w-full max-w-[1200px] flex flex-col items-center">
+        <div className="w-full max-w-[1200px] flex flex-col items-center relative">
             <textarea
                 value={todoText}
                 onChange={(e)=>{
@@ -30,7 +31,13 @@ const TodoForm = () => {
                         onClick={DeleteItem}
                     >delete</button>
                     <button
-                        className="cursor-pointer px-4 py-1 bg-[#53535342] rounded-4xl">date</button>
+                        className="cursor-pointer px-4 py-1 bg-[#53535342] rounded-4xl" 
+                        onClick={()=>{
+                            setDate(prev=>({
+                                ...prev,
+                                isOpen:true
+                            }))
+                        }}>date</button>
                 </aside>
             </section>
             
@@ -49,7 +56,7 @@ const TodoForm = () => {
                                 }
                             }}
                          />
-                        <input 
+                        <input
                             type="text"
                             data-tooltip-id={`${emptyInput === index ? 'my-tooltip':''}`}
                             data-tooltip-content="please add item"
@@ -66,6 +73,22 @@ const TodoForm = () => {
                     </div>
                 ))
             }</main>
+            {
+                date.isOpen && (
+                    <div className="absolute bg-[white] p-4">
+                        <DayPicker
+                            mode="single"
+                            selected={date.date ? new Date(date.date) : undefined}
+                            onSelect={(e)=>{
+                                setDate(prev=>({
+                                    ...prev,
+                                    isOpen:false,
+                                }))
+                            }}
+                        />
+                    </div>
+                )
+            }
             <ReactTooltip id="my-tooltip" isOpen={toggleToolTp}/>
         </div>
     );

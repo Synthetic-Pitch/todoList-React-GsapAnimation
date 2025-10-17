@@ -1,5 +1,5 @@
 import React, { createContext } from "react";
-import type { DataItem, TodoType } from "../models/Context-api";
+import type { DataItem, DateType, TodoType } from "../models/Context-api";
 
 interface DataContextType {
     item: DataItem[],
@@ -11,7 +11,12 @@ interface DataContextType {
     isTextAreaValue:boolean;
     setTextAreaValue:React.Dispatch<React.SetStateAction<boolean>>
     todo:TodoType[],
-    setTodo:React.Dispatch<React.SetStateAction<TodoType[]>>
+    setTodo:React.Dispatch<React.SetStateAction<TodoType[]>>,
+    date:{
+        isOpen:boolean,
+        date:Date | null
+    },
+    setDate:React.Dispatch<React.SetStateAction<DateType>>
 }
 
 const DataContext = createContext<DataContextType>({
@@ -24,7 +29,12 @@ const DataContext = createContext<DataContextType>({
     isTextAreaValue:false,
     setTextAreaValue:()=>{},
     todo:[],
-    setTodo:()=>{}
+    setTodo:()=>{},
+    date:{
+        isOpen:false,
+        date: null
+    },
+    setDate:()=>{}
 });
 
 export default DataContext;

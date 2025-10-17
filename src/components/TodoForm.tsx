@@ -79,7 +79,7 @@ const TodoForm = () => {
                         <DayPicker
                             mode="single"
                             selected={date.date ? new Date(date.date) : undefined}
-                            onSelect={(e)=>{
+                            onSelect={()=>{
                                 setDate(prev=>({
                                     ...prev,
                                     isOpen:false,

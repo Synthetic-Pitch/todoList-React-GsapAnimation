@@ -15,14 +15,13 @@ export function UseTodo(){
         if(storage){
             setTodo(JSON.parse(storage));
         }else console.log('asd');
-        console.log(date);
-        
     },[storage,date]);
 
     // This add item together with random UUID and check if it has empty value
     const AddItem = () => {
         const condition = item.some((item,_)=> item.text.trim() === '');
-        if(condition) {
+        
+        if(condition) { 
             const findIndex = item.findIndex((i,_)=> i.text.trim() === ''); //this find what index is empty
             setEmptyInput(findIndex === -1 ? null:findIndex);
             setToggleToolTp(true);
@@ -32,11 +31,12 @@ export function UseTodo(){
             return;
         }else{
             const value = {
-                id:crypto.randomUUID(),
+                id:crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(),
                 text:''
             }
             setItem(prev=>[...prev,value]); 
         }
+       
     }
 
     // This delete specific index from list

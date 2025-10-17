@@ -5,7 +5,6 @@ import DataContext from "../context-api/Data-Context";
 
 const SaveBtn = () => {  
     const {item,setItem,status, setStatus, todoText,setTodoText,setTextAreaValue,todo} = useContext(DataContext);
-    
 
     const SaveTodo = () => {
         if(status === 'add'){
@@ -17,18 +16,19 @@ const SaveBtn = () => {
         }
     }
 
-    const handleEdit = ()=> {
+    const handleEdit = ()=>  {
         if(todoText.trim() === ''){
             return setTextAreaValue(true);
         }else setTextAreaValue(false);
-
+        
         let todo = {
-            id: crypto.randomUUID(),
+            id: crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(),
             todo: todoText.trim(),
             item: item,
             done: false,
             dateToAcomplish: '',
         }
+       
         const prevTodo = localStorage.getItem('todo');
         if(prevTodo) {
             const arr = JSON.parse(prevTodo);

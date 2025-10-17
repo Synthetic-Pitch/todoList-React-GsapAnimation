@@ -39,9 +39,11 @@ const TodoMap =  () => {
                    </section>
                    <aside className='px-8'>
                         {
-                            td.item.map((tdi,_)=>(
-                                <div key={tdi.id} className='flex items-center py-1'>
-                                     { 
+                            td.item.map((tdi,_)=>{
+                                if(tdi.text !== ''){
+                                    return (
+                                         <div key={tdi.id} className='flex items-center py-1'>
+                                    { 
                                         status === 'edit' && (
                                         <img 
                                             src={deleteIcon} alt="" 
@@ -74,11 +76,13 @@ const TodoMap =  () => {
                                                 });
                                             });
                                         }}
-                                        className='outline-0' 
+                                        className='outline-0'
                                         disabled={status === 'edit' ? false : true}
                                     />
                                 </div>
-                            ))
+                                    )
+                                }
+                            })
                         }
                    </aside>
                 </div>

@@ -44,10 +44,10 @@ const TodoForm = () => {
             {/* This is Item's map*/}
             <main className="w-full pl-4">{
                 item.map((i:DataItem,index:number)=>(
-                    <div key={i.id} className="flex gap-2 mt-2">
+                    <div key={i.id} className="flex gap-2 mt-2 items-center overflow-hidden">
                         <input
                             type="checkbox"
-                            className="h-6 w-6"
+                            className="h-8 w-8 tablet:h-6 tablet:w-6"
                             onChange={(e)=>{
                                 if(e.target.checked){
                                     setDeleteList(prev=>[...prev,index]);
@@ -60,7 +60,7 @@ const TodoForm = () => {
                             type="text"
                             data-tooltip-id={`${emptyInput === index ? 'my-tooltip':''}`}
                             data-tooltip-content="please add item"
-                            className="bg-[white] outline-0 px-2 h-6"
+                            className="bg-[white] outline-0 px-2 h-8 flex-grow tablet:flex-initial mr-2 text-[20px]"
                             value={i.text}
                             onChange={(e)=>{
                                 setItem(prev=>{

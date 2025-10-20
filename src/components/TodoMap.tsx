@@ -43,43 +43,43 @@ const TodoMap =  () => {
                                 if(tdi.text !== ''){
                                     return (
                                          <div key={tdi.id} className='flex items-center py-1'>
-                                    { 
-                                        status === 'edit' && (
-                                        <img 
-                                            src={deleteIcon} alt="" 
-                                            className='h-3 cursor-pointer px-2'
-                                            onClick={()=>DeleteTdoItem(td.id,tdi.id)}
-                                        />
-                                    )}
-                                    <input
-                                        type="text" value={tdi.text}
-                                        onChange={(e) => {
-                                            setTodo(prev => {
-                                                return prev.map(todo => {
-                                                    // Find the matching todo
-                                                    if (todo.id === td.id) {
-                                                        return {
-                                                            ...todo,
-                                                            item: todo.item.map(item => {
-                                                                // Find the matching item and update its text
-                                                                if (item.id === tdi.id) {
-                                                                    return {
-                                                                        ...item,
-                                                                        text: e.target.value
-                                                                    };
-                                                                }
-                                                                return item;
-                                                            })
-                                                        };
-                                                    }
-                                                    return todo;
-                                                });
-                                            });
-                                        }}
-                                        className='outline-0'
-                                        disabled={status === 'edit' ? false : true}
-                                    />
-                                </div>
+                                            { 
+                                                status === 'edit' && (
+                                                    <img 
+                                                        src={deleteIcon} alt="" 
+                                                        className='h-3 cursor-pointer px-2'
+                                                        onClick={()=>DeleteTdoItem(td.id,tdi.id)}
+                                                    />
+                                                )}
+                                            <input
+                                                type="text" value={tdi.text}
+                                                onChange={(e) => {
+                                                    setTodo(prev => {
+                                                        return prev.map(todo => {
+                                                            // Find the matching todo
+                                                            if (todo.id === td.id) {
+                                                                return {
+                                                                    ...todo,
+                                                                    item: todo.item.map(item => {
+                                                                        // Find the matching item and update its text
+                                                                        if (item.id === tdi.id) {
+                                                                            return {
+                                                                                ...item,
+                                                                                text: e.target.value
+                                                                            };
+                                                                        }
+                                                                        return item;
+                                                                    })
+                                                                };
+                                                            }
+                                                            return todo;
+                                                        });
+                                                    });
+                                                }}
+                                                className='outline-0'
+                                                disabled={status === 'edit' ? false : true}
+                                            />
+                                        </div>
                                     )
                                 }
                             })

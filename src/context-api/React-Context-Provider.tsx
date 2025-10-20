@@ -12,9 +12,9 @@ export default function ReactProvider ({children}:{children:React.ReactNode}){
     const [todo, setTodo] = useState<TodoType[]>([]);
     const [date,setDate] = useState<DateType>({
         isOpen:false,
-        date:null,
+        date:undefined,
     });
-
+    
     const contextValue = {
         UI_Data,
         status,

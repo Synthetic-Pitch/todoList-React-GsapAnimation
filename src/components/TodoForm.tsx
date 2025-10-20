@@ -3,13 +3,22 @@ import { DayPicker } from "react-day-picker";
 import { UseTodo } from "../customHook/todoHook";
 import type { DataItem } from "../models/Context-api";
 import { Tooltip as ReactTooltip} from 'react-tooltip';
+import { useEffect, useRef } from "react";
 
 const TodoForm = () => {
     const {
         AddItem,item,setItem,DeleteItem,setDeleteList,toggleToolTp,
-        emptyInput,setTodoText,todoText,isTextAreaValue,date,setDate
+        emptyInput,setTodoText,todoText,isTextAreaValue,date,setDate,
     } = UseTodo();
-    
+    const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+     // Focus on the last input when a new item is added
+    useEffect(() => {
+        if (item.length > 0) {
+            const lastIndex = item.length - 1;
+            inputRefs.current[lastIndex]?.focus();
+        }
+    }, [item.length]); // Trigger when item array length changes
+
     return (
         <div className="w-full max-w-[1200px] flex flex-col items-center relative">
             <textarea
@@ -37,7 +46,7 @@ const TodoForm = () => {
                                 ...prev,
                                 isOpen:true
                             }))
-                        }}>date</button>
+                        }}>{date.date ? date.date.toLocaleDateString() : 'date'}</button>
                 </aside>
             </section>
             
@@ -55,8 +64,9 @@ const TodoForm = () => {
                                     setDeleteList(prev=>prev.filter((d)=> d !== index))
                                 }
                             }}
-                         />
+                        />
                         <input
+                            ref={(el) => { if (inputRefs.current) inputRefs.current[index] = el; }}
                             type="text"
                             data-tooltip-id={`${emptyInput === index ? 'my-tooltip':''}`}
                             data-tooltip-content="please add item"
@@ -75,14 +85,15 @@ const TodoForm = () => {
             }</main>
             {
                 date.isOpen && (
-                    <div className="absolute bg-[white] p-4">
+                    <div className="absolute bg-[white] p-4 select-none">
                         <DayPicker
                             mode="single"
-                            selected={date.date ? new Date(date.date) : undefined}
-                            onSelect={()=>{
+                            selected={date.date}
+                            onSelect={(selectedDate)=>{
                                 setDate(prev=>({
                                     ...prev,
-                                    isOpen:false,
+                                    date:selectedDate ? selectedDate : undefined,
+                                    isOpen:false
                                 }))
                             }}
                         />

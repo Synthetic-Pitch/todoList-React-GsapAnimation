@@ -10,7 +10,7 @@ export function UseTodo(){
     const [emptyInput,setEmptyInput] = useState<number | null>(null);
     const {item,setItem,todoText,setTodoText,isTextAreaValue,setTodo,date,setDate} = useContext(DataContext);
     const storage = localStorage.getItem('todo');
-
+    
     useEffect(()=>{
         if(storage){
             setTodo(JSON.parse(storage));

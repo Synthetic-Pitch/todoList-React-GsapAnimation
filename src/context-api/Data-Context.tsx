@@ -14,7 +14,7 @@ interface DataContextType {
     setTodo:React.Dispatch<React.SetStateAction<TodoType[]>>,
     date:{
         isOpen:boolean,
-        date:Date | null
+        date:Date | undefined
     },
     setDate:React.Dispatch<React.SetStateAction<DateType>>
 }
@@ -32,7 +32,7 @@ const DataContext = createContext<DataContextType>({
     setTodo:()=>{},
     date:{
         isOpen:false,
-        date: null
+        date: undefined
     },
     setDate:()=>{}
 });

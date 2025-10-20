@@ -12,5 +12,5 @@ export interface TodoType {
 }
 export interface DateType {
     isOpen:boolean,
-    date:Date | null
+    date:Date | undefined
 }

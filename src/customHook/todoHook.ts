@@ -8,14 +8,35 @@ export function UseTodo(){
     const [deleteList,setDeleteList] = useState<number[]>([]);
     const [toggleToolTp,setToggleToolTp] = useState(false);
     const [emptyInput,setEmptyInput] = useState<number | null>(null);
-    const {item,setItem,todoText,setTodoText,isTextAreaValue,setTodo,date,setDate} = useContext(DataContext);
+    const {item,setItem,todoText,setTodoText,isTextAreaValue,setTodo,date,setDate,setDateValidation,dateValidation} = useContext(DataContext);
+
     const storage = localStorage.getItem('todo');
     
     useEffect(()=>{
         if(storage){
             setTodo(JSON.parse(storage));
-        }else console.log('asd');
-    },[storage,date]);
+        }
+    },[storage]);
+    useEffect(() => {
+        // First check if date exists
+        if (!date.date) {
+            setDateValidation('please select a date');
+            return; // Exit early if no date is selected
+        }
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const selectedDate = new Date(date.date as Date);
+        selectedDate.setHours(0, 0, 0, 0);
+
+        // Allow today or future dates
+        if (selectedDate < today) {
+            setDateValidation('invalid date');
+        } else {
+            setDateValidation('valid');
+        }
+    }, [date]);
 
     // This add item together with random UUID and check if it has empty value
     const AddItem = () => {
@@ -78,6 +99,6 @@ export function UseTodo(){
     return {
         item,setItem,AddItem,DeleteItem,deleteList,setDeleteList,
         toggleToolTp,emptyInput,todoText,setTodoText,isTextAreaValue,
-        DeleteTodo,DeleteTdoItem,date,setDate
+        DeleteTodo,DeleteTdoItem,date,setDate,dateValidation
     }
 }

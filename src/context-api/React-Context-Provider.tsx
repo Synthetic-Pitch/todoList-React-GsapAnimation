@@ -14,6 +14,7 @@ export default function ReactProvider ({children}:{children:React.ReactNode}){
         isOpen:false,
         date:undefined,
     });
+    const [dateValidation,setDateValidation] = useState<string>('');
     
     const contextValue = {
         UI_Data,
@@ -26,7 +27,8 @@ export default function ReactProvider ({children}:{children:React.ReactNode}){
         isTextAreaValue,
         setTextAreaValue,
         todo, setTodo,
-        date,setDate
+        date,setDate,
+        dateValidation,setDateValidation,
     }
     return <DataContext.Provider value={contextValue}>{children}</DataContext.Provider>
 };

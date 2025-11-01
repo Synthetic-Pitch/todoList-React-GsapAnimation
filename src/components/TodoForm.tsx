@@ -8,9 +8,10 @@ import { useEffect, useRef } from "react";
 const TodoForm = () => {
     const {
         AddItem,item,setItem,DeleteItem,setDeleteList,toggleToolTp,
-        emptyInput,setTodoText,todoText,isTextAreaValue,date,setDate,
+        emptyInput,setTodoText,todoText,isTextAreaValue,date,setDate,dateValidation
     } = UseTodo();
     const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
      // Focus on the last input when a new item is added
     useEffect(() => {
         if (item.length > 0) {
@@ -18,7 +19,7 @@ const TodoForm = () => {
             inputRefs.current[lastIndex]?.focus();
         }
     }, [item.length]); // Trigger when item array length changes
-
+    
     return (
         <div className="w-full max-w-[1200px] flex flex-col items-center relative">
             <textarea
@@ -40,6 +41,8 @@ const TodoForm = () => {
                         onClick={DeleteItem}
                     >delete</button>
                     <button
+                        data-tooltip-id="date-tooltip"
+                        data-tooltip-content={String(dateValidation)}
                         className="cursor-pointer px-4 py-1 bg-[#53535342] rounded-4xl" 
                         onClick={()=>{
                             setDate(prev=>({
@@ -87,6 +90,7 @@ const TodoForm = () => {
                 date.isOpen && (
                     <div className="absolute bg-[white] p-4 select-none">
                         <DayPicker
+                            
                             mode="single"
                             selected={date.date}
                             onSelect={(selectedDate)=>{
@@ -94,13 +98,14 @@ const TodoForm = () => {
                                     ...prev,
                                     date:selectedDate ? selectedDate : undefined,
                                     isOpen:false
-                                }))
+                                }));
                             }}
                         />
                     </div>
                 )
             }
             <ReactTooltip id="my-tooltip" isOpen={toggleToolTp}/>
+            
         </div>
     );
 };

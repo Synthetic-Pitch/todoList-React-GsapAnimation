@@ -16,7 +16,9 @@ interface DataContextType {
         isOpen:boolean,
         date:Date | undefined
     },
-    setDate:React.Dispatch<React.SetStateAction<DateType>>
+    setDate:React.Dispatch<React.SetStateAction<DateType>>,
+    dateValidation:string,
+    setDateValidation:React.Dispatch<React.SetStateAction<string>>
 }
 
 const DataContext = createContext<DataContextType>({
@@ -34,7 +36,9 @@ const DataContext = createContext<DataContextType>({
         isOpen:false,
         date: undefined
     },
-    setDate:()=>{}
+    setDate:()=>{},
+    dateValidation:'',
+    setDateValidation:()=>{},
 });
 
 export default DataContext;

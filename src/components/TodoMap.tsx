@@ -3,11 +3,10 @@ import { useContext, useEffect, useState} from "react";
 import type { TodoType } from "../models/Context-api";
 import DataContext from "../context-api/Data-Context";
 import { UseTodo } from '../customHook/todoHook';
-import { el } from 'date-fns/locale';
 
 const TodoMap =  () => {
     const {status,todo, setTodo} = useContext(DataContext);
-    const {DeleteTodo,DeleteTdoItem} = UseTodo();
+    const {DeleteTodo} = UseTodo();
     const [sortedTodo,setSortedTodo] = useState<{ today: TodoType[]; tomorrow: TodoType[]; upcoming: TodoType[] }>({
         today: [],
         tomorrow: [],

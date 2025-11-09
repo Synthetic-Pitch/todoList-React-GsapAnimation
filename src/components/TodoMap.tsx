@@ -89,7 +89,7 @@ const TodoMap =  () => {
                                     outline:'none',
                                 }}
                                 className={`text-3xl font-poppins ${status === 'edit' ? "":"[&::selection]:bg-transparent"} `}
-                                disabled={status === 'edit' ? false: true}
+                                disabled={status === 'edit' ? false: true }
                             />
                         </section>
                         <section>{
@@ -100,7 +100,16 @@ const TodoMap =  () => {
                                         <img
                                             src={deleteIcon} alt=""
                                             className={`h-4 w-4 cursor-pointer mr-2`}
-                                            onClick={()=>DeleteTodo(td.id)}
+                                            onClick={()=>{
+                                                setTodo(prev=>{
+                                                    const arr = [...prev];
+                                                    const todoIndex = arr.findIndex(t => t.id === td.id);
+                                                    const itemIndex = arr[todoIndex].item.findIndex(td => td.id === itd.id);
+                                                    if (todoIndex === -1 || itemIndex === -1) return prev;
+                                                    arr[todoIndex].item = arr[todoIndex].item.filter(i => i.id !== itd.id);
+                                                    return arr
+                                                })
+                                            }}
                                         />
                                     )}
                                     <input type="text"

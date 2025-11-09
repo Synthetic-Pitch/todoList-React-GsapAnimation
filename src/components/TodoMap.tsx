@@ -5,7 +5,7 @@ import DataContext from "../context-api/Data-Context";
 import { UseTodo } from '../customHook/todoHook';
 
 const TodoMap =  () => {
-    const {status,todo, setTodo,} = useContext(DataContext);
+    const {status,todo, setTodo,achieved,setAchieved} = useContext(DataContext);
     const {DeleteTodo} = UseTodo();
     const [sortedTodo,setSortedTodo] = useState<{ today: TodoType[]; tomorrow: TodoType[]; upcoming: TodoType[] }>({
         today: [],
@@ -46,11 +46,19 @@ const TodoMap =  () => {
             upcoming: upcomingList
         });
     }, [todo]);
-    
+
     return (
         <div className=" w-full max-w-[1200px] flex flex-col gap-2 px-2">
             {/* this section is  for todo map: */}
-            <div><h2 className='text-2xl text-[blue] cursor-pointer'>DONE</h2></div>
+            <div>{
+                achieved.length > 0 && (
+                    <button
+                        className='text-xl text-[#3e8c3e] font-bold bg-[#ffffff1c] px-2 rounded-xl tracking-wide cursor-pointer'
+                        onClick={()=>{}}
+                    >DONE</button>
+                )
+            }</div>
+
             <section >
                 { sortedTodo.today.length > 0 && <h1 className='text-white text-4xl mb-4'>Today</h1>}
                 
@@ -60,7 +68,25 @@ const TodoMap =  () => {
                         <section className='flex items-center px-4 gap-4'>
                             {
                                 status === 'view' && (
-                                    <input type="checkbox" name='isDoneCheckbox' className='h-5 w-5  bg-[#D4A483] border-1 border-black' />
+                                    <input
+                                        type="checkbox" name='isDoneCheckbox'
+                                        className='h-5 w-5  bg-[#D4A483] border-1 border-black'
+                                        onChange={(e)=>{
+                                            if(e.target.checked){
+                                                setAchieved(prev=>{
+                                                    const arr = [...prev];
+                                                    arr.push(td.id);
+                                                    return arr;
+                                                });
+                                            }else{
+                                                setAchieved(prev=>{
+                                                    const arr = [...prev];
+                                                    const updated = arr.filter(id => id !== td.id);
+                                                    return updated;
+                                                })
+                                            }
+                                        }}
+                                    />
                                 )
                             }
                             {

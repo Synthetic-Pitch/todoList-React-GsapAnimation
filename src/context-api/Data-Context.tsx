@@ -19,6 +19,8 @@ interface DataContextType {
     setDate:React.Dispatch<React.SetStateAction<DateType>>,
     dateValidation:string,
     setDateValidation:React.Dispatch<React.SetStateAction<string>>,
+    achieved:string[],
+    setAchieved:React.Dispatch<React.SetStateAction<string[]>>
 }
 
 const DataContext = createContext<DataContextType>({
@@ -39,6 +41,8 @@ const DataContext = createContext<DataContextType>({
     setDate:()=>{},
     dateValidation:'',
     setDateValidation:()=>{},
+    achieved:[],
+    setAchieved:()=>{},
 });
 
 export default DataContext;

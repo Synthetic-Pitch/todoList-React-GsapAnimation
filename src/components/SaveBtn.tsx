@@ -3,7 +3,7 @@ import DataContext from "../context-api/Data-Context";
 import { Tooltip as ReactTooltip} from 'react-tooltip';
 
 const SaveBtn = () => {
-    const {item,setItem,status, setStatus, todoText,setTodoText,setTextAreaValue,todo,dateValidation,date,setDate} = useContext(DataContext);
+    const {item,setItem,status, setStatus, todoText,setTodoText,setTextAreaValue,todo,dateValidation,date,setDate,} = useContext(DataContext);
     const [isOpen,setOpen] = useState(false);
 
     const SaveTodo = () => {

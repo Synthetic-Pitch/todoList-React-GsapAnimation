@@ -4,10 +4,11 @@ import SaveBtn from "../components/SaveBtn";
 import TodoForm from "../components/TodoForm";
 import TodoMap from "../components/TodoMap";
 import DataContext from "../context-api/Data-Context";
+import { Link } from "react-router-dom";
 
 
 const CreateTodo = () => {
-    const {status,setStatus,} = useContext(DataContext);
+    const {status,setStatus} = useContext(DataContext);
     
     return (
         <div className="bg-[#D4A483] min-h-[100dvh] flex flex-col items-center">
@@ -36,9 +37,9 @@ const CreateTodo = () => {
                     )}
                 </section>
                 <aside className="hidden w-[70%] tablet:flex justify-evenly pl-[20%] text-2xl font-azeret select-none">
-                    <button className="text-[#FFFFFF] cursor-pointer px-2">history</button>
-                    <button className="text-[#FFFFFF] cursor-pointer px-2">failed</button>
-                    <button className="text-[#FFFFFF] cursor-pointer px-2">succed</button>
+                    <Link to="/history" className="text-[#FFFFFF] cursor-pointer px-2">history</Link>
+                     <Link to="/failed" className="text-[#FFFFFF] cursor-pointer px-2">failed</Link>
+                     <Link to="/succed" className="text-[#FFFFFF] cursor-pointer px-2">succed</Link>
                 </aside>
             </nav>
             {

@@ -18,7 +18,7 @@ interface DataContextType {
     },
     setDate:React.Dispatch<React.SetStateAction<DateType>>,
     dateValidation:string,
-    setDateValidation:React.Dispatch<React.SetStateAction<string>>
+    setDateValidation:React.Dispatch<React.SetStateAction<string>>,
 }
 
 const DataContext = createContext<DataContextType>({
